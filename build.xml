@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir=".">
+	<target name="init">
+        <mkdir dir="build"/>
+        <mkdir dir="doc"/>
+        <copy includeemptydirs="false" todir="build">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+        <target name="clean">
+        <delete dir="build"/>
+        <delete dir="doc"/>
+        <delete dir="dest-client"/>
+    </target>
+	<target name="compile" depends="init">
+		<javac srcdir="src/" destdir="build/" includeantruntime="false" />
+		<javadoc sourcepath="src/" destdir="doc/" />
+		<jar destfile="dest-client/FactoryKlondike.jar">
+			<fileset dir="build/" />
+			<manifest>
+    			<attribute name="Main-Class" value="gui.MainWindow"/>
+  			</manifest>
+		</jar>
+	</target>
+	<target name="run" depends="compile">
+		<java jar="dest-client/FactoryKlondike.jar" fork="true" />
+	</target>
+</project>
